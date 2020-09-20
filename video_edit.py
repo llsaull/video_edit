@@ -85,6 +85,10 @@ def get_fout(f,ext):
     f1 = os.path.splitext(f)[0]
     f2 = os.path.splitext(f)[1]
     fout = f"{f1}[{ext}]{f2}"
+    i = 1
+    while os.path.exists(fout):
+        fout = f"{f1}[{ext}{i}]{f2}"
+        i += 1
     return fout
 
 def cut_video(f):
