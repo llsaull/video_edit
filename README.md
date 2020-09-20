@@ -11,6 +11,7 @@ Currenlty this is what it does:
          c - cut a video   
          j - join videos   
          t - add text to video
+         v - increase volume   
 ```
 Curretly the script only looks for .mkv and .mp4 files, you may change this in the script
 if needed. For the text option, you have to set the path to a valid font in the variable

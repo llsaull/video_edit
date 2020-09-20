@@ -5,7 +5,6 @@ import os
 
 PATH_TO_FONT = "/usr/share/fonts/TTF/DejaVuSans.ttf"
 
-
 def read_menu():
     opt = ["c","j","t","x","v"]
     x = ""
@@ -55,11 +54,10 @@ def join_videos(fs):
         concat_file.write(f"file '{f}'\n")
     concat_file.close()
     fout = get_fout(fs[0],"j")
-    txt = f"ffmpeg -f concat -safe 0 -i .concat.txt -c copy {fout}"
+    txt = f"ffmpeg -f concat -safe 0 -i .concat.txt -c copy \"{fout}\""
     print(txt)
     os.system(txt)
-    print(f"  [DONE] output saved to {fout}")
-    print("-"*30+"\n"*2)
+    closing_remarks(fout)
 
 def choose_file():
     print("  Choose a file to edit:")
@@ -98,11 +96,10 @@ def cut_video(f):
     ss = input(" beginning (hh:mm:ss): ")
     to = input(" end       (hh:mm:ss): ")
     fout = get_fout(f,"c")
-    txt = f"ffmpeg -i {f} -ss {ss} -to {to} -c copy {fout}"
+    txt = f"ffmpeg -i \"{f}\" -ss {ss} -to {to} -c copy \"{fout}\""
     print(txt)
     os.system(txt)
-    print(f"  [DONE] output saved to {fout}")
-    print("-"*30+"\n"*2)
+    closing_remarks(fout)
 
 def add_text(f):
     ss   = input(" beginning (hh:mm:ss): ")
@@ -117,36 +114,41 @@ def add_text(f):
            f":fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5"+\
            f":boxborderw=5: x=(w-text_w)/2: y=(h-text_h)/2"
     fout = get_fout(f,"t")
-    txt  = f"ffmpeg -i {f} -vf \"{cmd}\" -max_muxing_queue_size 9999 -acodec copy {fout}"
+    txt  = f"ffmpeg -i \"{f}\" -vf \"{cmd}\" "+\
+           f"-max_muxing_queue_size 9999 -acodec copy \"{fout}\""
 
     print(txt)
     os.system(txt)
-    print(f"  [DONE] output saved to {fout}")
-    print("-"*30+"\n"*2)
+    closing_remarks(fout)
 
 def increase_volume(f):
     fout = get_fout(f,"v")
-    txt  = f"ffmpeg -i {f} -filter:a \"volume=4.0\" "+\
-           f"-max_muxing_queue_size 9999 {fout}"
+    txt  = f"ffmpeg -i \"{f}\" -filter:a \"volume=4.0\" "+\
+           f"-max_muxing_queue_size 9999 \"{fout}\""
     print(txt)
     os.system(txt)
-    print(f"  [DONE] output saved to {fout}")
-    print("-"*30+"\n"*2)
+    closing_remarks(fout)
 
+def closing_remarks(f):
+    print("\n"*2+"-"*80)
+    print(f"  [DONE] output saved to {f}")
+    print("-"*80+"\n"*2)
 
-exit = False
-while not exit:
-    x = read_menu()
-    if x == "c":
-        cut_video(choose_file())
-    elif x == "j":
-        join_videos(choose_files())
-    elif x == "t":
-        add_text(choose_file())
-    elif x == "x":
-        exit = True
-    elif x == "v":
-        increase_volume(choose_file())
+def main():
+    exit = False
+    while not exit:
+        x = read_menu()
+        if x == "c":
+            cut_video(choose_file())
+        elif x == "j":
+            join_videos(choose_files())
+        elif x == "t":
+            add_text(choose_file())
+        elif x == "x":
+            exit = True
+        elif x == "v":
+            increase_volume(choose_file())
+        else:
+            print("Not implemented yet")
 
-    else:
-        print("Not implemented yet")
+main()
