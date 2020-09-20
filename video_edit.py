@@ -7,7 +7,7 @@ PATH_TO_FONT = "/usr/share/fonts/TTF/DejaVuSans.ttf"
 
 
 def read_menu():
-    opt = ["c","j","t","x"]
+    opt = ["c","j","t","x","v"]
     x = ""
     while not x in opt:
         print(
@@ -15,6 +15,7 @@ def read_menu():
         "      c - cut a video       \n"+
         "      j - join videos       \n"+
         "      t - add text to video \n"+
+        "      v - increase volume   \n"+
         "      x - exit"
         )
         x = input()
@@ -53,10 +54,10 @@ def join_videos(fs):
     for f in fs:
         concat_file.write(f"file '{f}'\n")
     concat_file.close()
-    fout = get_fout(f,"j")
-    txt = f"ffmpeg -f concat -safe 0 -i .concat.txt -c copy fout"
+    fout = get_fout(fs[0],"j")
+    txt = f"ffmpeg -f concat -safe 0 -i .concat.txt -c copy {fout}"
     print(txt)
-    #os.system(txt)
+    os.system(txt)
     print(f"  [DONE] output saved to {fout}")
     print("-"*30+"\n"*2)
 
@@ -99,7 +100,7 @@ def cut_video(f):
     fout = get_fout(f,"c")
     txt = f"ffmpeg -i {f} -ss {ss} -to {to} -c copy {fout}"
     print(txt)
-    #os.system(txt)
+    os.system(txt)
     print(f"  [DONE] output saved to {fout}")
     print("-"*30+"\n"*2)
 
@@ -123,6 +124,15 @@ def add_text(f):
     print(f"  [DONE] output saved to {fout}")
     print("-"*30+"\n"*2)
 
+def increase_volume(f):
+    fout = get_fout(f,"v")
+    txt  = f"ffmpeg -i {f} -filter:a \"volume=4.0\" "+\
+           f"-max_muxing_queue_size 9999 {fout}"
+    print(txt)
+    os.system(txt)
+    print(f"  [DONE] output saved to {fout}")
+    print("-"*30+"\n"*2)
+
 
 exit = False
 while not exit:
@@ -135,5 +145,8 @@ while not exit:
         add_text(choose_file())
     elif x == "x":
         exit = True
+    elif x == "v":
+        increase_volume(choose_file())
+
     else:
         print("Not implemented yet")
