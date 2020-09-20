@@ -1,4 +1,4 @@
-s# About
+## About
 
 This is a simple script to wrap ffmpeg calls to edit videos. I wrote this to
 prepare lecture for my classes, since the process of running ffmpeg from the command
