@@ -3,6 +3,8 @@
 import sys 
 import os
 
+PATH_TO_FONT = "/usr/share/fonts/TTF/DejaVuSans.ttf"
+
 
 def read_menu():
     opt = ["c","j","t","x"]
@@ -109,7 +111,7 @@ def add_text(f):
     bsecs = int(hh)*60**2 + int(mm)*60 + int(ss)
     esecs = bsecs + int(d)
 
-    font = "fontfile=/usr/share/fonts/TTF/DejaVuSans.ttf"
+    font = f"fontfile={PATH_TO_FONT}"
     cmd  = f"drawtext=enable='between(t,{bsecs},{esecs})':{font}:text='{text}'"+\
            f":fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5"+\
            f":boxborderw=5: x=(w-text_w)/2: y=(h-text_h)/2"
