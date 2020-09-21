@@ -31,7 +31,7 @@ def choose_files():
     exit = False
     while not exit:
         for i in range(0,len(l)):
-            print(f"      {i+1} - {l[i]}")
+            print(f"      {i+1:2} - {l[i]}")
         print("  choose multiple files to join (separated by spaces): ",end="")
 
         # Check input
@@ -80,6 +80,7 @@ def get_files():
         if not os.path.isdir(f):
             if f.endswith(".mkv") or f.endswith(".mp4"):
                 l.append(f)
+    l.sort(key=lambda x: os.path.getmtime(x))
     return l
 
 def get_fout(f,ext):
