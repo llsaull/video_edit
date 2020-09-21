@@ -22,4 +22,4 @@ defined in the beginning of the script.
    
 ## How to run:
 
-Run the script from the folder where you videos are located.
+Run the script from the folder where your videos are located.
