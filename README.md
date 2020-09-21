@@ -13,7 +13,7 @@ Currenlty this is what it does:
          t - add text to video
          v - increase volume   
 ```
-Curretly the script only looks for .mkv and .mp4 files, you may change this in the script
+The script only looks for .mkv and .mp4 files, but you may change this in the script
 if needed. For the text option, you have to set the path to a valid font in the variable
 ```
 PATH_TO_FONT = "<<YOUR FONT HERE>>"
