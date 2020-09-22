@@ -20,6 +20,7 @@ PATH_TO_FONT = "<<YOUR FONT HERE>>"
 ```
 defined in the beginning of the script.
    
-## How to run:
+## Steps:
 
-Run the script from the folder where your videos are located.
+1. Install ffmpeg;
+2. Run the script from the folder where your videos are located.
